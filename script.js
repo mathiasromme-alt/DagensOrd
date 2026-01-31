@@ -12,30 +12,36 @@ const words = [
   "Visdom","Vækst","Vrede","Ydmyghed"
 ];
 
+// Calculate day number accurately
 const today = new Date();
-const dayNumber = Math.floor(today / (1000 * 60 * 60 * 24));
+const dayNumber = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
 const word = words[dayNumber % words.length];
 
+// Set word and date
 document.getElementById("word").textContent = word;
 document.getElementById("date").textContent = today.toDateString();
 
-// Floating light particles
-for(let i=0; i<20; i++){
+// Create cozy floating particles / fireflies
+for(let i=0; i<25; i++){
   const p = document.createElement('div');
   p.className = 'particle';
   p.style.left = `${Math.random() * 100}vw`;
   p.style.animationDuration = `${10 + Math.random()*20}s`;
-  p.style.width = `${5 + Math.random()*10}px`;
-  p.style.height = p.style.width;
+  const size = 5 + Math.random()*10;
+  p.style.width = `${size}px`;
+  p.style.height = `${size}px`;
+  p.style.opacity = 0.3 + Math.random()*0.5;
   document.body.appendChild(p);
 }
 
-// Create forest tree silhouettes
+// Create forest trees with depth variation
 const forest = document.createElement('div');
 forest.className = 'forest';
 for(let i=0; i<7; i++){
   const tree = document.createElement('div');
   tree.className = 'tree';
+  tree.style.borderBottomWidth = `${35 + Math.random()*35}px`; // random height
+  tree.style.animationDuration = `${4 + Math.random()*3}s`; // random sway
   forest.appendChild(tree);
 }
 document.body.appendChild(forest);
