@@ -1,4 +1,4 @@
-/* GENERAL STYLING */
+/* ================= GENERAL STYLING ================= */
 body {
   font-family: system-ui, sans-serif;
   margin: 0;
@@ -8,22 +8,15 @@ body {
   justify-content: center;
   overflow: hidden;
   color: white;
+  position: relative;
 
   /* Sunset + forest gradient */
   background: linear-gradient(to top, #0b2e1a, #2a4b2d, #ffb347, #ff7e5f, #6a11cb);
-  animation: backgroundShift 30s ease-in-out infinite alternate;
+  animation: backgroundShiftPulse 30s ease-in-out infinite alternate;
   transition: background 1s ease;
-  position: relative;
 }
 
-/* GRADIENT ANIMATION */
-@keyframes backgroundShift {
-  0% { background: linear-gradient(to top, #0b2e1a, #2a4b2d, #ffb347, #ff7e5f, #6a11cb); }
-  50% { background: linear-gradient(to top, #0a2516, #224027, #ffc48c, #ff9a7b, #7b3dc1); }
-  100% { background: linear-gradient(to top, #0b2e1a, #2a4b2d, #ffb347, #ff7e5f, #6a11cb); }
-}
-
-/* COZY OVERLAY */
+/* ================= COZY BACKGROUND & PULSE ================= */
 body::after {
   content: '';
   position: absolute;
@@ -34,12 +27,29 @@ body::after {
   z-index: 1;
 }
 
-/* PARTICLES / FIREFLIES */
+@keyframes backgroundShiftPulse {
+  0% {
+    background: linear-gradient(to top, #0b2e1a, #2a4b2d, #ffb347, #ff7e5f, #6a11cb);
+    filter: brightness(1);
+  }
+  25% { filter: brightness(1.05); }
+  50% {
+    background: linear-gradient(to top, #0a2516, #224027, #ffc48c, #ff9a7b, #7b3dc1);
+    filter: brightness(1.1);
+  }
+  75% { filter: brightness(1.05); }
+  100% {
+    background: linear-gradient(to top, #0b2e1a, #2a4b2d, #ffb347, #ff7e5f, #6a11cb);
+    filter: brightness(1);
+  }
+}
+
+/* ================= PARTICLES / FIREFLIES ================= */
 .particle {
   position: absolute;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255,255,200,0.8), rgba(255,255,150,0));
-  animation: floatParticle 20s linear infinite;
+  animation: floatParticle 20s linear infinite, particleGlow 3s ease-in-out infinite alternate;
 }
 
 @keyframes floatParticle {
@@ -48,7 +58,13 @@ body::after {
   100% { transform: translateY(-10vh) translateX(50vw) scale(1); opacity: 0; }
 }
 
-/* MOUNTAIN LAYERS */
+@keyframes particleGlow {
+  0% { opacity: 0.3; transform: scale(0.5); }
+  50% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 0.3; transform: scale(0.5); }
+}
+
+/* ================= MOUNTAIN LAYERS ================= */
 .mountain-layer {
   position: absolute;
   bottom: 0;
@@ -68,7 +84,7 @@ body::after {
   100% { transform: translateX(-50%); }
 }
 
-/* FOREST / TREES */
+/* ================= FOREST / TREES ================= */
 .forest {
   position: absolute;
   bottom: 0;
@@ -94,7 +110,7 @@ body::after {
   100% { transform: rotate(-2deg); }
 }
 
-/* CONTAINER AND TEXT */
+/* ================= CONTAINER & WORD ================= */
 .container {
   text-align: center;
   padding: 1.5rem;
@@ -103,11 +119,32 @@ body::after {
 }
 
 #word {
+  position: relative;
+  display: inline-block;
   font-size: 2.5rem;
   margin: 1rem 0;
   text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
   opacity: 0;
   animation: fadeInWord 2s forwards;
+}
+
+/* Word glow */
+#word::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%; height: 120%;
+  background: radial-gradient(circle, rgba(255,220,150,0.5), rgba(255,180,100,0));
+  border-radius: 50%;
+  z-index: -1;
+  animation: glowPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
 }
 
 .date {
@@ -120,9 +157,10 @@ body::after {
   to { opacity: 1; }
 }
 
-/* MOBILE RESPONSIVE */
+/* ================= MOBILE RESPONSIVE ================= */
 @media (max-width: 600px) {
   #word { font-size: 1.8rem; }
+  #word::before { width: 140%; height: 140%; }
   .date { font-size: 0.9rem; }
   .tree { border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom-width: 35px; }
 }
