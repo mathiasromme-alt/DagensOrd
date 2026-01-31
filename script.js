@@ -12,7 +12,7 @@ const words = [
   "Visdom","Vækst","Vrede","Ydmyghed"
 ];
 
-// Calculate day number accurately
+// Calculate day number
 const today = new Date();
 const dayNumber = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
 const word = words[dayNumber % words.length];
@@ -21,7 +21,7 @@ const word = words[dayNumber % words.length];
 document.getElementById("word").textContent = word;
 document.getElementById("date").textContent = today.toDateString();
 
-// Create cozy floating particles / fireflies
+// Create floating fireflies
 for(let i=0; i<25; i++){
   const p = document.createElement('div');
   p.className = 'particle';
@@ -34,14 +34,14 @@ for(let i=0; i<25; i++){
   document.body.appendChild(p);
 }
 
-// Create forest trees with depth variation
+// Create forest trees
 const forest = document.createElement('div');
 forest.className = 'forest';
 for(let i=0; i<7; i++){
   const tree = document.createElement('div');
   tree.className = 'tree';
-  tree.style.borderBottomWidth = `${35 + Math.random()*35}px`; // random height
-  tree.style.animationDuration = `${4 + Math.random()*3}s`; // random sway
+  tree.style.borderBottomWidth = `${35 + Math.random()*35}px`;
+  tree.style.animationDuration = `${4 + Math.random()*3}s`;
   forest.appendChild(tree);
 }
 document.body.appendChild(forest);
