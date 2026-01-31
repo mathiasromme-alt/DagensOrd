@@ -1,24 +1,122 @@
 body {
   font-family: system-ui, sans-serif;
-  background: #0f172a;
-  color: white;
+  margin: 0;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  margin: 0;
+  overflow: hidden;
+
+  /* Sunset + forest gradient */
+  background: linear-gradient(to top, #0b2e1a, #2a4b2d, #ffb347, #ff7e5f, #6a11cb);
+  animation: backgroundShift 30s ease-in-out infinite alternate;
+  color: white;
+  transition: background 1s ease;
+}
+
+@keyframes backgroundShift {
+  0% {
+    background: linear-gradient(to top, #0b2e1a, #2a4b2d, #ffb347, #ff7e5f, #6a11cb);
+  }
+  50% {
+    background: linear-gradient(to top, #0a2516, #224027, #ffc48c, #ff9a7b, #7b3dc1);
+  }
+  100% {
+    background: linear-gradient(to top, #0b2e1a, #2a4b2d, #ffb347, #ff7e5f, #6a11cb);
+  }
+}
+
+/* Floating light particles */
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: floatParticle 20s linear infinite;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0.5);
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-10vh) translateX(50vw) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Mountain layers */
+.mountain-layer {
+  position: absolute;
+  bottom: 0;
+  width: 200%;
+  height: 20%;
+  background: rgba(0, 25, 0, 0.8);
+  clip-path: polygon(0% 100%, 10% 60%, 20% 80%, 30% 50%, 40% 70%, 50% 40%, 60% 65%, 70% 45%, 80% 70%, 90% 50%, 100% 100%);
+  animation: moveMountain 60s linear infinite;
+  z-index: 0;
+}
+
+.mountain-layer:nth-child(1) { bottom: 0; background: rgba(0,25,0,0.9); animation-duration: 80s; z-index: 0; }
+.mountain-layer:nth-child(2) { bottom: 10%; background: rgba(0,40,10,0.7); animation-duration: 100s; z-index: 0; }
+.mountain-layer:nth-child(3) { bottom: 5%; background: rgba(0,60,20,0.5); animation-duration: 120s; z-index: 0; }
+
+@keyframes moveMountain {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Forest silhouettes */
+.forest {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: space-around;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.tree {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 60px solid rgba(0, 20, 0, 0.8);
+  animation: sway 5s ease-in-out infinite alternate;
+}
+
+.tree:nth-child(2) { border-bottom-width: 50px; animation-duration: 6s; }
+.tree:nth-child(3) { border-bottom-width: 70px; animation-duration: 4s; }
+.tree:nth-child(4) { border-bottom-width: 55px; animation-duration: 7s; }
+.tree:nth-child(5) { border-bottom-width: 65px; animation-duration: 5.5s; }
+
+@keyframes sway {
+  0% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+  100% { transform: rotate(-2deg); }
 }
 
 .container {
   text-align: center;
   padding: 2rem;
+  z-index: 2;
+  position: relative;
 }
 
 #word {
   font-size: 2.5rem;
   margin: 1rem 0;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 }
 
 .date {
-  opacity: 0.6;
+  opacity: 0.8;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
 }
